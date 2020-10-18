@@ -19,7 +19,14 @@ npm install -g pev2-cli
 ## Usage
 
 ```shell
-# todo
+Usage:
+    pev2 <path-to-query-file>
+Notes:
+    This tool will run the query using the `psql` command-line tool.
+Options:
+    -
+Examples:
+    pev2 path/to/some-explain-query.sql
 ```
 
 
