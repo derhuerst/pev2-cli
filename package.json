@@ -9,7 +9,9 @@
 	"main": "index.js",
 	"files": [
 		"cli.js",
-		"index.js"
+		"index.js",
+		"build.sh",
+		"lib"
 	],
 	"keywords": [
 		"postgresql",
@@ -36,8 +38,9 @@
 		"eslint": "^7.9.0"
 	},
 	"scripts": {
+		"build": "./build.sh",
 		"test": "echo todo; exit 1",
 		"lint": "eslint .",
-		"prepublishOnly": "npm test && npm run lint"
+		"prepublishOnly": "npm run build && npm test && npm run lint"
 	}
 }
