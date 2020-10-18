@@ -1,0 +1,43 @@
+{
+	"name": "pev2-cli",
+	"description": "Run the PostgreSQL Explain Visualizer 2 from the command line.",
+	"version": "1.0.0",
+	"preferGlobal": true,
+	"bin": {
+		"pev2": "./cli.js"
+	},
+	"main": "index.js",
+	"files": [
+		"cli.js",
+		"index.js"
+	],
+	"keywords": [
+		"postgresql",
+		"postgres",
+		"pev2",
+		"explain",
+		"query",
+		"visualizer",
+		"cli",
+		"sql"
+	],
+	"author": "Jannis R <mail@jannisr.de>",
+	"homepage": "https://github.com/derhuerst/pev2-cli",
+	"repository": "derhuerst/pev2-cli",
+	"bugs": "https://github.com/derhuerst/pev2-cli/issues",
+	"license": "ISC",
+	"engines": {
+		"node": ">=12"
+	},
+	"dependencies": {
+		"mri": "^1.1.6"
+	},
+	"devDependencies": {
+		"eslint": "^7.9.0"
+	},
+	"scripts": {
+		"test": "echo todo; exit 1",
+		"lint": "eslint .",
+		"prepublishOnly": "npm test && npm run lint"
+	}
+}
