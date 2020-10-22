@@ -53,6 +53,6 @@ const showError = (err) => {
 	])
 
 	const {url} = await visualizeExplainFile(explainResult, query)
-	process.stdout.write(url + '\n')
+	console.info(`serving pev2 at ${url}`)
 })()
 .catch(showError)

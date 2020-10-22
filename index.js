@@ -1,18 +1,34 @@
 'use strict'
 
 const {join: pathJoin} = require('path')
+const {readFileSync} = require('fs')
 const serveStatic = require('serve-static')
 const {createServer} = require('http')
+const accepts = require('accepts')
 const finalhandler = require('finalhandler')
 const {promisify} = require('util')
-const {encode: encodeQueryString} = require('querystring')
+
+const DIR = pathJoin(__dirname, 'lib')
+
+const INJECT = readFileSync(pathJoin(__dirname, 'inject.js'), {encoding: 'utf8'})
+const RAW_INDEX = readFileSync(pathJoin(DIR, 'index.html'), {encoding: 'utf8'})
+const INDEX = RAW_INDEX.replace('</body>', `<script>${INJECT}</script></body>`)
 
 const visualizeExplainFile = async (explainResult, query) => {
-	const pev2 = serveStatic(pathJoin(__dirname, 'lib'), {
+	const pev2 = serveStatic(DIR, {
 		fallthrough: false,
 	})
 	const app = createServer((req, res) => {
-		pev2(req, res, finalhandler(req, res))
+		const path = new URL(req.url, 'http://example.org').pathname
+		if (path === '/') {
+			res.setHeader('content-type', 'text/html')
+			res.end(INDEX)
+		} else if (path === '/data' && accepts(req).type(['json']) === 'json') {
+			res.setHeader('content-type', 'application/json')
+			res.end(JSON.stringify({explainResult, query}))
+		} else {
+			pev2(req, res, finalhandler(req, res))
+		}
 	})
 
 	const port = 3000 // todo: pick port properly
@@ -21,16 +37,13 @@ const visualizeExplainFile = async (explainResult, query) => {
 		await promisify(app.close.bind(app))()
 	}
 
-	// todo: make pev2 support passing via URL, see dalibo/pev2#292
-	let url = new URL('http://localhost')
+	const url = new URL('http://localhost')
+	url.host = app.address().address
 	url.port = port
-	url.hash = encodeQueryString({
-		explainResult,
-		query,
-	})
-	url = url.href
-
-	return {stop, url}
+	return {
+		stop,
+		url: url.href,
+	}
 }
 
 module.exports = visualizeExplainFile

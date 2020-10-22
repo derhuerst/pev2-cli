@@ -10,6 +10,7 @@
 	"files": [
 		"cli.js",
 		"index.js",
+		"inject.js",
 		"build.sh",
 		"lib"
 	],
@@ -32,6 +33,7 @@
 		"node": ">=12"
 	},
 	"dependencies": {
+		"accepts": "^1.3.7",
 		"execa": "^4.0.3",
 		"finalhandler": "^1.1.2",
 		"mri": "^1.1.6",
