@@ -9,6 +9,7 @@ const argv = mri(process.argv.slice(2), {
 	boolean: [
 		'help', 'h',
 		'version', 'v',
+		'open', 'o',
 	]
 })
 
@@ -19,9 +20,9 @@ Usage:
 Notes:
     This tool will run the query using the \`psql\` command-line tool.
 Options:
-    -
+    --open     -o  Open the URL in the browser.
 Examples:
-    pev2 path/to/some-explain-query.sql
+    pev2 --open path/to/some-explain-query.sql
 \n`)
 	process.exit(0)
 }
@@ -33,6 +34,7 @@ if (argv.version || argv.v) {
 
 const execa = require('execa')
 const {readFileSync} = require('fs')
+const open = require('open')
 const visualizeExplainFile = require('.')
 
 const showError = (err) => {
@@ -54,5 +56,8 @@ const showError = (err) => {
 
 	const {url} = await visualizeExplainFile(explainResult, query)
 	console.info(`serving pev2 at ${url}`)
+	if (argv.open || argv.o) {
+		await open(url)
+	}
 })()
 .catch(showError)
