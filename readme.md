@@ -1,6 +1,6 @@
 # pev2-cli
 
-**Run the [PostgreSQL Explain Visualizer 2](https://github.com/dalibo/pev2) from the command line.**
+**Run the [PostgreSQL Explain Visualizer 2 (pev2)](https://github.com/dalibo/pev2) from the command line.**
 
 [![npm version](https://img.shields.io/npm/v/pev2-cli.svg)](https://www.npmjs.com/package/pev2-cli)
 [![build status](https://api.travis-ci.org/derhuerst/pev2-cli.svg?branch=master)](https://travis-ci.org/derhuerst/pev2-cli)
