@@ -51,6 +51,7 @@ const showError = (err) => {
 
 	const {stdout: explainResult} = await execa('psql', [
 		'-XqAt', // from pev2 instructions
+		'-v', 'ON_ERROR_STOP=1', // stop & exit non-zero on errors
 		'-f', pathToQuery,
 	])
 
@@ -60,4 +61,9 @@ const showError = (err) => {
 		await open(url)
 	}
 })()
-.catch(showError)
+.catch((err) => {
+	if (err && err.command && err.command.slice(0, 5) === 'psql ') {
+		err = err.stderr
+	}
+	showError(err)
+})
