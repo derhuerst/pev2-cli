@@ -1,7 +1,7 @@
 {
 	"name": "pev2-cli",
 	"description": "Run the PostgreSQL Explain Visualizer 2 (pev2) from the command line.",
-	"version": "1.4.1",
+	"version": "1.5.0",
 	"preferGlobal": true,
 	"bin": {
 		"pev2": "./cli.js"
@@ -47,6 +47,6 @@
 		"build": "./build.sh",
 		"test": "echo todo; exit 1",
 		"lint": "eslint .",
-		"prepublishOnly": "npm run build && npm test && npm run lint"
+		"prepublishOnly": "npm run build && npm run lint && npm test"
 	}
 }
