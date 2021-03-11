@@ -25,9 +25,10 @@ Usage:
 Notes:
     This tool will run the query using the `psql` command-line tool.
 Options:
-    -
+    --open     -o  Open the URL in the browser.
+    --once     -1  Stop serving after pev2 has received the data.
 Examples:
-    pev2 path/to/some-explain-query.sql
+    pev2 --open path/to/some-explain-query.sql
 ```
 
 

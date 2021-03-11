@@ -10,6 +10,7 @@ const argv = mri(process.argv.slice(2), {
 		'help', 'h',
 		'version', 'v',
 		'open', 'o',
+		'once', '1',
 	]
 })
 
@@ -21,6 +22,7 @@ Notes:
     This tool will run the query using the \`psql\` command-line tool.
 Options:
     --open     -o  Open the URL in the browser.
+    --once     -1  Stop serving after pev2 has received the data.
 Examples:
     pev2 --open path/to/some-explain-query.sql
 \n`)
@@ -49,13 +51,17 @@ const showError = (err) => {
 	}
 	const query = readFileSync(pathToQuery, {encoding: 'utf8'})
 
+	const once = !!(argv.once || argv['1'])
+
 	const {stdout: explainResult} = await execa('psql', [
 		'-XqAt', // from pev2 instructions
 		'-v', 'ON_ERROR_STOP=1', // stop & exit non-zero on errors
 		'-f', pathToQuery,
 	])
 
-	const {url} = await visualizeExplainFile(explainResult, query)
+	const {url} = await visualizeExplainFile(explainResult, query, {
+		once,
+	})
 	console.info(`serving pev2 at ${url}`)
 	if (argv.open || argv.o) {
 		await open(url)
