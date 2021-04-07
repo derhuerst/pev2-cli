@@ -12,6 +12,7 @@ setTimeout(() => {
 		throw err
 	})
 	.then(({explainResult, query}) => {
+		// eslint-disable-next-line no-undef
 		setPlanData(explainResult, query)
 	})
 	.catch((err) => {
