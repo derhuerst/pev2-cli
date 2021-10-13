@@ -21,12 +21,16 @@ Usage:
     pev2 <path-to-query-file>
 Notes:
     This tool will run the query using the \`psql\` command-line tool.
+
+    Prefix your SQL query with the following line to get a detailed analysis:
+    	EXPLAIN (ANALYZE, COSTS, VERBOSE, BUFFERS, FORMAT JSON)
 Options:
-    --open     -o  Open the URL in the browser.
-    --quiet    -q  Don't report what's going on.
-    --once     -1  Stop serving after pev2 has received the data.
+    --open       -o  Open the URL in the browser.
+    --quiet      -q  Don't report what's going on.
+    --once       -1  Stop serving after pev2 has received the data.
+    --psql-opts  -p  Options to pass into psql.
 Examples:
-    pev2 --open -q path/to/some-explain-query.sql
+    pev2 --open -q -p '-v enable_seqscan=off' path/to/some-explain-query.sql
 \n`)
 	process.exit(0)
 }
@@ -55,12 +59,14 @@ const showError = (err) => {
 
 	const quiet = !!(argv.quiet || argv.q)
 	const once = !!(argv.once || argv['1'])
+	const psqlOpts = argv['psql-opts'] || argv.p || ''
 
 	if (!quiet) console.info(`running psql with ${pathToQuery}`)
 	const {stdout: explainResult} = await execa('psql', [
 		'-XqAt', // from pev2 instructions
 		'-v', 'ON_ERROR_STOP=1', // stop & exit non-zero on errors
 		'-f', pathToQuery,
+		psqlOpts,
 	])
 
 	const {url} = await visualizeExplainFile(explainResult, query, {
