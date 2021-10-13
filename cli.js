@@ -51,6 +51,10 @@ const showError = (err) => {
 }
 
 ;(async () => {
+	console.error('process.argv', process.argv)
+	console.error('argv', argv)
+	process.exit(1)
+
 	const pathToQuery = argv._[0]
 	if (!pathToQuery) {
 		showError('Missing 1st argument: path to EXPLAIN query file.')
