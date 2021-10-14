@@ -32,6 +32,8 @@ Examples:
     pev2 --open -q path/to/some-explain-query.sql
 ```
 
+Because `pev2-cli` just uses the `psql` CLI tool provided by PostgreSQL, you can use [all environment variables that it supports](https://www.postgresql.org/docs/current/libpq-envars.html) to configure access to your PostgreSQL database.
+
 
 ## Contributing
 
