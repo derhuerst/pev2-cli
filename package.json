@@ -1,7 +1,7 @@
 {
 	"name": "pev2-cli",
 	"description": "Run the PostgreSQL Explain Visualizer 2 (pev2) from the command line.",
-	"version": "1.10.0",
+	"version": "1.11.0",
 	"preferGlobal": true,
 	"bin": {
 		"pev2": "./cli.js"
