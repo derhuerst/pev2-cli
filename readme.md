@@ -23,6 +23,10 @@ npm install -g pev2-cli
 Usage:
     pev2 <path-to-query-file>
 Notes:
+    This tool uses the pev2 to visualize PostgreSQL's performance data.
+    To obtain this data for your query, prefix it with the following line:
+        EXPLAIN (ANALYZE, COSTS, VERBOSE, BUFFERS, FORMAT JSON)
+
     This tool will run the query using the `psql` command-line tool.
 Options:
     --open     -o  Open the URL in the browser.
