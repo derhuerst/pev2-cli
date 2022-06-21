@@ -2,7 +2,6 @@
 
 const {join: pathJoin} = require('path')
 const {readFileSync} = require('fs')
-const serveStatic = require('serve-static')
 const {createServer} = require('http')
 const accepts = require('accepts')
 const finalhandler = require('finalhandler')
@@ -22,9 +21,6 @@ const visualizeExplainFile = async (explainResult, query, opt = {}) => {
 		...opt,
 	}
 
-	const pev2 = serveStatic(DIR, {
-		fallthrough: false,
-	})
 	const app = createServer((req, res) => {
 		if (once) res.setHeader('connection', 'close')
 
@@ -46,7 +42,8 @@ const visualizeExplainFile = async (explainResult, query, opt = {}) => {
 			res.setHeader('content-type', 'application/json')
 			res.end(JSON.stringify({explainResult, query}))
 		} else {
-			pev2(req, res, finalhandler(req, res))
+			res.writeHead(404)
+			res.end()
 		}
 	})
 
