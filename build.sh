@@ -3,7 +3,4 @@
 set -e
 set -x
 
-curl -L -s -O 'https://github.com/dalibo/pev2/releases/download/v0.24.0/pev2.tar.gz'
-
-rm -rf lib/*
-tar -x -C lib -f pev2.tar.gz --strip-components 1
+curl -L -s -o lib/index.html 'https://github.com/dalibo/pev2/releases/download/v1.1.1/index.html'
