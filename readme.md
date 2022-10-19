@@ -21,22 +21,26 @@ npm install -g pev2-cli
 
 ```shell
 Usage:
-    pev2 <path-to-query-file>
+    pev2 <path-to-query-file> [path-to-execution-plan]
 Notes:
-    This tool uses the pev2 to visualize PostgreSQL's performance data.
-    To obtain this data for your query, prefix it with the following line:
+    This tool uses the pev2 to visualize PostgreSQL's execution plan including
+    costs associated to each operation.
+        more info: https://www.postgresql.org/docs/14/using-explain.html
+    To let PostgreSQL generate the plan, prefix it with the following line:
         EXPLAIN (ANALYZE, COSTS, VERBOSE, BUFFERS, FORMAT JSON)
 
-    This tool will run the query using the `psql` command-line tool.
+    If you don't pass an execution plan, this tool will spawn `psql` to run the
+    the query. Use the `PG*` environment variables to make sure `psql` can
+    connect to the right database.
+        more info: https://www.postgresql.org/docs/14/libpq-envars.html
 Options:
     --open     -o  Open the URL in the browser.
     --quiet    -q  Don't report what's going on.
     --once     -1  Stop serving after pev2 has received the data.
 Examples:
     pev2 --open -q path/to/some-explain-query.sql
-```
 
-Because `pev2-cli` just uses the `psql` CLI tool provided by PostgreSQL, you can use [all environment variables that it supports](https://www.postgresql.org/docs/current/libpq-envars.html) to configure access to your PostgreSQL database.
+```
 
 
 ## Contributing

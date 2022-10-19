@@ -18,13 +18,18 @@ const argv = mri(process.argv.slice(2), {
 if (argv.help || argv.h) {
 	process.stdout.write(`
 Usage:
-    pev2 <path-to-query-file>
+    pev2 <path-to-query-file> [path-to-execution-plan]
 Notes:
-    This tool uses the pev2 to visualize PostgreSQL's performance data.
-    To obtain this data for your query, prefix it with the following line:
+    This tool uses the pev2 to visualize PostgreSQL's execution plan including
+    costs associated to each operation.
+        more info: https://www.postgresql.org/docs/14/using-explain.html
+    To let PostgreSQL generate the plan, prefix it with the following line:
         EXPLAIN (ANALYZE, COSTS, VERBOSE, BUFFERS, FORMAT JSON)
 
-    This tool will run the query using the \`psql\` command-line tool.
+    If you don't pass an execution plan, this tool will spawn \`psql\` to run the
+    the query. Use the \`PG*\` environment variables to make sure \`psql\` can
+    connect to the right database.
+    	more info: https://www.postgresql.org/docs/14/libpq-envars.html
 Options:
     --open     -o  Open the URL in the browser.
     --quiet    -q  Don't report what's going on.
@@ -60,12 +65,19 @@ const showError = (err) => {
 	const quiet = !!(argv.quiet || argv.q)
 	const once = !!(argv.once || argv['1'])
 
-	if (!quiet) console.info(`running psql with ${pathToQuery}`)
-	const {stdout: explainResult} = await execa('psql', [
-		'-XqAt', // from pev2 instructions
-		'-v', 'ON_ERROR_STOP=1', // stop & exit non-zero on errors
-		'-f', pathToQuery,
-	])
+	let explainResult = null
+	if (argv._.length > 1) {
+		const pathToExecPlan = argv._[1]
+		explainResult = readFileSync(pathToExecPlan, {encoding: 'utf8'})
+	} else {
+		if (!quiet) console.info(`running psql with ${pathToQuery}`)
+		const res = await execa('psql', [
+			'-XqAt', // from pev2 instructions
+			'-v', 'ON_ERROR_STOP=1', // stop & exit non-zero on errors
+			'-f', pathToQuery,
+		])
+		explainResult = res.stdout
+	}
 
 	const {url} = await visualizeExplainFile(explainResult, query, {
 		once,
