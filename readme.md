@@ -3,7 +3,6 @@
 **Run the [PostgreSQL Explain Visualizer 2 (pev2)](https://github.com/dalibo/pev2) from the command line.**
 
 [![npm version](https://img.shields.io/npm/v/pev2-cli.svg)](https://www.npmjs.com/package/pev2-cli)
-[![build status](https://api.travis-ci.org/derhuerst/pev2-cli.svg?branch=master)](https://travis-ci.org/derhuerst/pev2-cli)
 ![ISC-licensed](https://img.shields.io/github/license/derhuerst/pev2-cli.svg)
 ![minimum Node.js version](https://img.shields.io/node/v/pev2-cli.svg)
 [![support me via GitHub Sponsors](https://img.shields.io/badge/support%20me-donate-fa7664.svg)](https://github.com/sponsors/derhuerst)
