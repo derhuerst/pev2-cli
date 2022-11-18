@@ -12,8 +12,9 @@ setTimeout(() => {
 		throw err
 	})
 	.then(({explainResult, query}) => {
+		const name = 'new-plan' // todo
 		// eslint-disable-next-line no-undef
-		setPlanData(explainResult, query)
+		setPlanData(name, explainResult, query)
 	})
 	.catch((err) => {
 		// This is ugly but makes the error very visible.
