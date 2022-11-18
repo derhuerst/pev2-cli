@@ -16,8 +16,10 @@ const INDEX = RAW_INDEX.replace('</body>', `<script>${INJECT}</script></body>`)
 const visualizeExplainFile = async (explainResult, query, opt = {}) => {
 	const {
 		once,
+		name,
 	} = {
 		once: false,
+		name: 'new-plan',
 		...opt,
 	}
 
@@ -40,7 +42,7 @@ const visualizeExplainFile = async (explainResult, query, opt = {}) => {
 			}
 
 			res.setHeader('content-type', 'application/json')
-			res.end(JSON.stringify({explainResult, query}))
+			res.end(JSON.stringify({name, explainResult, query}))
 		} else {
 			res.writeHead(404)
 			res.end()

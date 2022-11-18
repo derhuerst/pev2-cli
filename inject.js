@@ -11,8 +11,7 @@ setTimeout(() => {
 		err.statusCode = res.status
 		throw err
 	})
-	.then(({explainResult, query}) => {
-		const name = 'new-plan' // todo
+	.then(({name, explainResult, query}) => {
 		// eslint-disable-next-line no-undef
 		setPlanData(name, explainResult, query)
 	})

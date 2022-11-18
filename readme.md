@@ -36,6 +36,8 @@ Options:
     --open     -o  Open the URL in the browser.
     --quiet    -q  Don't report what's going on.
     --once     -1  Stop serving after pev2 has received the data.
+    --name     -n  Give the execution plan a name within pev2.
+                     Default: filename and ISO date+time
 Examples:
     pev2 --open -q path/to/some-explain-query.sql
 

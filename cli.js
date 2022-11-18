@@ -34,6 +34,8 @@ Options:
     --open     -o  Open the URL in the browser.
     --quiet    -q  Don't report what's going on.
     --once     -1  Stop serving after pev2 has received the data.
+    --name     -n  Give the execution plan a name within pev2.
+                     Default: filename and ISO date+time
 Examples:
     pev2 --open -q path/to/some-explain-query.sql
 \n`)
@@ -45,6 +47,7 @@ if (argv.version || argv.v) {
 	process.exit(0)
 }
 
+const {basename} = require('path')
 const execa = require('execa')
 const {readFileSync} = require('fs')
 const open = require('open')
@@ -62,12 +65,16 @@ const showError = (err) => {
 	}
 	const query = readFileSync(pathToQuery, {encoding: 'utf8'})
 
+	const pathToExecPlan = argv._[1] || null
+
 	const quiet = !!(argv.quiet || argv.q)
 	const once = !!(argv.once || argv['1'])
 
+	const filename = argv._[1] ? basename(pathToExecPlan) : basename(pathToQuery)
+	const name = argv.name || argv.n || `${filename} ${new Date().toISOString()}`
+
 	let explainResult = null
-	if (argv._.length > 1) {
-		const pathToExecPlan = argv._[1]
+	if (pathToExecPlan !== null) {
 		explainResult = readFileSync(pathToExecPlan, {encoding: 'utf8'})
 	} else {
 		if (!quiet) console.info(`running psql with ${pathToQuery}`)
@@ -81,6 +88,7 @@ const showError = (err) => {
 
 	const {url} = await visualizeExplainFile(explainResult, query, {
 		once,
+		name,
 	})
 	if (!quiet) console.info(`serving pev2 at ${url}`)
 	if (argv.open || argv.o) {
