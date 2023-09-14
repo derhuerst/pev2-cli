@@ -32,12 +32,13 @@ Notes:
     	more info: https://www.postgresql.org/docs/14/libpq-envars.html
 Options:
     --open     -o  Open the URL in the browser.
+    --app          The browser to open the URL with.
     --quiet    -q  Don't report what's going on.
     --once     -1  Stop serving after pev2 has received the data.
     --name     -n  Give the execution plan a name within pev2.
                      Default: filename and ISO date+time
 Examples:
-    pev2 --open -q path/to/some-explain-query.sql
+    pev2 --open --app firefox -q path/to/some-explain-query.sql
 \n`)
 	process.exit(0)
 }
@@ -92,7 +93,11 @@ const showError = (err) => {
 	})
 	if (!quiet) console.info(`serving pev2 at ${url}`)
 	if (argv.open || argv.o) {
-		await open(url)
+		await open(url, {
+			...(argv.app ? {
+				app: {name: argv.app},
+			} : {}),
+		})
 	}
 })()
 .catch((err) => {
