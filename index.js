@@ -49,15 +49,23 @@ const visualizeExplainFile = async (explainResult, query, opt = {}) => {
 		}
 	})
 
-	const port = 3000 // todo: pick port properly
-	await promisify(app.listen.bind(app))(port)
+	const port = 10000 + (Math.random() * 10000 | 0) // todo: pick port properly
+	const listen = promisify(app.listen.bind(app))
+	await listen({
+		host: 'localhost',
+		port,
+	})
 	const stop = async () => {
 		await promisify(app.close.bind(app))()
 	}
 
-	const url = new URL('http://localhost')
-	url.host = app.address().address
-	url.port = port
+	const url = new URL('http://example.org')
+	{
+		const {family, address, port} = app.address()
+		// work around https://github.com/nodejs/node/issues/49650
+		url.hostname = family === 'IPv6' ? `[${address}]` : address
+		url.port = port
+	}
 	return {
 		stop,
 		url: url.href,
