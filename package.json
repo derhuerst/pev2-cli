@@ -3,6 +3,7 @@
 	"description": "Run the PostgreSQL Explain Visualizer 2 (pev2) from the command line.",
 	"version": "1.26.0",
 	"preferGlobal": true,
+	"type": "module",
 	"bin": {
 		"pev2": "./cli.js"
 	},

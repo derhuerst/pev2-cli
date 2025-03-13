@@ -1,8 +1,11 @@
 #!/usr/bin/env node
-'use strict'
 
-const mri = require('mri')
+// todo: use import assertions once they're supported by Node.js (>= 18.20.5) & ESLint
+// https://github.com/tc39/proposal-import-assertions
+import {createRequire} from 'module';
+const require = createRequire(import.meta.url);
 
+import mri from 'mri'
 const pkg = require('./package.json')
 
 const argv = mri(process.argv.slice(2), {
@@ -48,18 +51,18 @@ if (argv.version || argv.v) {
 	process.exit(0)
 }
 
-const {basename} = require('path')
-const execa = require('execa')
-const {readFileSync} = require('fs')
-const open = require('open')
-const visualizeExplainFile = require('.')
+import {basename} from 'node:path'
+import execa from 'execa'
+import {readFileSync} from 'node:fs'
+import open from 'open'
+import {visualizeExplainFile} from './index.js'
 
 const showError = (err) => {
 	console.error(err)
 	process.exit(1)
 }
 
-;(async () => {
+try {
 	const pathToQuery = argv._[0]
 	if (!pathToQuery) {
 		showError('Missing 1st argument: path to EXPLAIN query file.')
@@ -99,10 +102,10 @@ const showError = (err) => {
 			} : {}),
 		})
 	}
-})()
-.catch((err) => {
+} catch (err) {
+	let errToUse = err
 	if (err && err.command && err.command.slice(0, 5) === 'psql ') {
-		err = err.stderr
+		errToUse = err.stderr
 	}
-	showError(err)
-})
+	showError(errToUse)
+}

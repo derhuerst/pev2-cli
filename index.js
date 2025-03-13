@@ -1,16 +1,17 @@
-'use strict'
+import {join as pathJoin} from 'node:path'
+import {readFileSync} from 'node:fs'
+import {createServer} from 'node:http'
+import accepts from 'accepts'
+import {promisify} from 'node:util'
 
-const {join: pathJoin} = require('path')
-const {readFileSync} = require('fs')
-const {createServer} = require('http')
-const accepts = require('accepts')
-const finalhandler = require('finalhandler')
-const {promisify} = require('util')
-
-const DIR = pathJoin(__dirname, 'lib')
-
-const INJECT = readFileSync(pathJoin(__dirname, 'inject.js'), {encoding: 'utf8'})
-const RAW_INDEX = readFileSync(pathJoin(DIR, 'index.html'), {encoding: 'utf8'})
+const INJECT = readFileSync(
+	pathJoin(import.meta.dirname, '/inject.js'),
+	{encoding: 'utf8'},
+)
+const RAW_INDEX = readFileSync(
+	pathJoin(import.meta.dirname, 'lib/index.html'),
+	{encoding: 'utf8'},
+)
 const INDEX = RAW_INDEX.replace('</body>', `<script>${INJECT}</script></body>`)
 
 const visualizeExplainFile = async (explainResult, query, opt = {}) => {
@@ -72,4 +73,6 @@ const visualizeExplainFile = async (explainResult, query, opt = {}) => {
 	}
 }
 
-module.exports = visualizeExplainFile
+export {
+	visualizeExplainFile,
+}
