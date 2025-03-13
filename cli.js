@@ -104,7 +104,7 @@ try {
 	}
 } catch (err) {
 	let errToUse = err
-	if (err && err.command && err.command.slice(0, 5) === 'psql ') {
+	if (err.stderr && err.command?.slice(0, 5) === 'psql ') {
 		errToUse = err.stderr
 	}
 	showError(errToUse)
