@@ -3,4 +3,5 @@
 set -e
 set -x
 
-curl -fsSL -o lib/index.html 'https://github.com/dalibo/pev2/releases/download/v1.13.4/index.html'
+# see also https://github.com/dalibo/pev2/issues/292#issuecomment-2721487239
+curl -fsSL -o lib/index.html 'https://github.com/dalibo/pev2/releases/download/v1.14.0/pev2.html'
