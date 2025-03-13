@@ -52,7 +52,7 @@ if (argv.version || argv.v) {
 }
 
 import {basename} from 'node:path'
-import execa from 'execa'
+import {execa} from 'execa'
 import {readFileSync} from 'node:fs'
 import open from 'open'
 import {visualizeExplainFile} from './index.js'
