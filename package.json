@@ -39,7 +39,7 @@
 		"open": "^8.2.1"
 	},
 	"devDependencies": {
-		"eslint": "^7.9.0"
+		"eslint": "^9.22.0"
 	},
 	"scripts": {
 		"build": "./build.sh",
