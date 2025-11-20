@@ -49,9 +49,11 @@ if (flags.help) {
 Usage:
 	pev2 <path-to-query-file> [path-to-execution-plan]
 Notes:
-	This tool uses the pev2 to visualize PostgreSQL's execution plan including
+	This tool uses pev2 to visualize PostgreSQL's execution plan including
 	costs associated to each operation.
-		more info: https://www.postgresql.org/docs/14/using-explain.html
+		more info:
+		- https://www.postgresql.org/docs/14/using-explain.html
+		- https://github.com/dalibo/pev2
 	To let PostgreSQL generate the plan, prefix it with the following line:
 		EXPLAIN (ANALYZE, COSTS, VERBOSE, BUFFERS, FORMAT JSON)
 
@@ -65,7 +67,7 @@ Options:
 	--quiet    -q  Don't report what's going on.
 	--once     -1  Stop serving after pev2 has received the data.
 	--name     -n  Give the execution plan a name within pev2.
-					 Default: filename and ISO date+time
+	                 Default: filename and ISO date+time
 Examples:
 	pev2 --open --app firefox -q path/to/some-explain-query.sql
 \n`)

@@ -18,13 +18,15 @@ npm install -g pev2-cli
 
 ## Usage
 
-```shell
+```
 Usage:
     pev2 <path-to-query-file> [path-to-execution-plan]
 Notes:
-    This tool uses the pev2 to visualize PostgreSQL's execution plan including
+    This tool uses pev2 to visualize PostgreSQL's execution plan including
     costs associated to each operation.
-        more info: https://www.postgresql.org/docs/14/using-explain.html
+        more info:
+        - https://www.postgresql.org/docs/14/using-explain.html
+        - https://github.com/dalibo/pev2
     To let PostgreSQL generate the plan, prefix it with the following line:
         EXPLAIN (ANALYZE, COSTS, VERBOSE, BUFFERS, FORMAT JSON)
 
